@@ -1,5 +1,7 @@
 # norbert błaszczyk · portfolio
 
+![preview](assets/og.png)
+
 Personal portfolio site — [blaszczyknorbert.com](https://blaszczyknorbert.com)
 
 ## stack
