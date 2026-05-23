@@ -1,0 +1,1289 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Norbert Błaszczyk — Portfolio</title>
+    <meta
+      name="description"
+      content="Frontend developer portfolio of Norbert Błaszczyk. Three years of commercial experience with Vue, React, and TypeScript."
+    />
+    <meta name="theme-color" content="#141415" />
+    <meta property="og:title" content="Norbert Błaszczyk — Portfolio" />
+    <meta
+      property="og:description"
+      content="Frontend developer portfolio of Norbert Błaszczyk. Three years of commercial experience with Vue, React, and TypeScript."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://blaszczyknorbert.com/" />
+    <meta
+      property="og:image"
+      content="https://blaszczyknorbert.com/assets/og.png"
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:image"
+      content="https://blaszczyknorbert.com/assets/og.png"
+    />
+    <link rel="canonical" href="https://blaszczyknorbert.com/" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><rect width='16' height='16' rx='2' fill='%23141415'/><text x='1' y='12' font-size='9' fill='%23c48282' font-family='monospace' font-weight='bold'>nb</text></svg>"
+    />
+    <link
+      rel="preload"
+      href="fonts/jetbrains-mono-300.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="fonts/jetbrains-mono-400.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="fonts/jetbrains-mono-500.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <style>
+      @font-face {
+        font-family: "JetBrains Mono";
+        font-style: normal;
+        font-weight: 300;
+        font-display: swap;
+        src: url("fonts/jetbrains-mono-300.woff2") format("woff2");
+      }
+      @font-face {
+        font-family: "JetBrains Mono";
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        src: url("fonts/jetbrains-mono-400.woff2") format("woff2");
+      }
+      @font-face {
+        font-family: "JetBrains Mono";
+        font-style: normal;
+        font-weight: 500;
+        font-display: swap;
+        src: url("fonts/jetbrains-mono-500.woff2") format("woff2");
+      }
+      :root {
+        --bg: #141415;
+        --inactive-bg: #1c1c24;
+        --fg: #cdcdcd;
+        --border: #878787;
+        --line: #252530;
+        --comment: #606079;
+        --visual: #333738;
+        --builtin: #b4d4cf;
+        --func: #c48282;
+        --string: #e8b589;
+        --number: #e0a363;
+        --property: #c3c3d5;
+        --constant: #aeaed1;
+        --parameter: #bb9dbd;
+        --error: #d8647e;
+        --warning: #f3be7c;
+        --hint: #7e98e8;
+        --operator: #90a0b5;
+        --keyword: #6e94b2;
+        --type: #9bb4bc;
+        --plus: #7fa563;
+        --accent: var(--func);
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        background: var(--bg);
+        color: var(--fg);
+        font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+        font-weight: 300;
+        font-size: 14px;
+        letter-spacing: 0.005em;
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+        overflow: hidden;
+        height: 100vh;
+        max-width: 100vw;
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      button {
+        background: none;
+        border: 0;
+        padding: 0;
+        font: inherit;
+        color: inherit;
+        cursor: pointer;
+        letter-spacing: inherit;
+      }
+      ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+      p {
+        margin: 0;
+      }
+      h2 {
+        margin: 0;
+        font: inherit;
+      }
+      ::selection {
+        background: var(--visual);
+        color: var(--fg);
+      }
+
+      .page {
+        display: grid;
+        grid-template-columns: 240px 1fr;
+        height: 100vh;
+        position: relative;
+      }
+
+      /* status bar */
+      .statusbar {
+        position: fixed;
+        left: 0;
+        right: 0;
+        top: 0;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 22px;
+        font-size: 11px;
+        letter-spacing: 0.04em;
+        background: rgba(20, 20, 21, 0.85);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        border-bottom: 1px solid var(--line);
+        z-index: 10;
+      }
+      .sb-left .dot {
+        display: inline-block;
+        width: 6px;
+        height: 6px;
+        border-radius: 999px;
+        background: var(--accent);
+        margin-right: 10px;
+        vertical-align: middle;
+      }
+      .sb-left .sub {
+        color: var(--comment);
+      }
+      .sb-mid {
+        color: var(--comment);
+        opacity: 0.85;
+      }
+
+      /* rail */
+      .rail {
+        position: fixed;
+        left: 0;
+        top: 32px;
+        bottom: 0;
+        width: 240px;
+        padding: 56px 28px 28px 28px;
+        display: flex;
+        flex-direction: column;
+        border-right: 1px solid var(--line);
+        z-index: 5;
+      }
+      .rail-head {
+        font-size: 11px;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        margin-bottom: 22px;
+        color: var(--comment);
+      }
+      .rail nav ul {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        flex: 1;
+      }
+      .rail nav a {
+        display: block;
+        font-size: 12.5px;
+        transition:
+          color 240ms,
+          transform 240ms;
+      }
+      .rail nav a:hover {
+        transform: translateX(3px);
+      }
+      .rail nav a.active {
+        color: var(--accent);
+      }
+      .rail-foot {
+        color: var(--comment);
+        font-size: 10.5px;
+        line-height: 1.7;
+        letter-spacing: 0.08em;
+        margin-top: auto;
+      }
+
+      /* scroll column */
+      .scroll {
+        grid-column: 2;
+        height: 100vh;
+        overflow-y: scroll;
+        padding-top: 32px;
+        scroll-behavior: smooth;
+      }
+      .scroll::-webkit-scrollbar {
+        width: 0;
+      }
+      .col {
+        max-width: 880px;
+        margin: 0 auto;
+        padding: 40px 80px 0 80px;
+      }
+
+      /* hero */
+      .hero-section {
+        padding-top: 22vh;
+        padding-bottom: 12vh;
+      }
+      .meta-line {
+        font-size: 11px;
+        color: var(--comment);
+        letter-spacing: 0.08em;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 60px;
+      }
+      .meta-line .spread {
+        margin-left: auto;
+      }
+      .hero {
+        font-family: "JetBrains Mono", ui-monospace, monospace;
+        font-weight: 300;
+        font-size: clamp(40px, 5.4vw, 64px);
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+        margin: 0;
+        text-wrap: pretty;
+      }
+      .cursor {
+        display: inline-block;
+        width: 0.5ch;
+        height: 0.95em;
+        background: var(--fg);
+        vertical-align: text-bottom;
+        margin-left: 2px;
+        animation: blink 1.08s steps(2) infinite;
+      }
+      @keyframes blink {
+        50% {
+          background: transparent;
+        }
+      }
+      .hero-sub {
+        margin-top: 28px;
+        font-size: 14px;
+        line-height: 1.7;
+        max-width: 520px;
+      }
+      .ambient-marks {
+        margin-top: 64px;
+        display: flex;
+        gap: 22px;
+        align-items: center;
+        height: 16px;
+      }
+      .ambient-marks span {
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        border-radius: 999px;
+        opacity: 0.7;
+      }
+
+      /* blocks */
+      .block {
+        padding-top: 14vh;
+        padding-bottom: 4vh;
+      }
+      .block-head {
+        display: flex;
+        align-items: baseline;
+        gap: 18px;
+        font-size: 11px;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        margin-bottom: 36px;
+        padding-bottom: 14px;
+        border-bottom: 1px solid var(--line);
+      }
+      .block-head .num {
+        color: var(--comment);
+      }
+      .block-head .label {
+        color: var(--fg);
+      }
+      .block-head .count {
+        margin-left: auto;
+        font-size: 10px;
+        color: var(--comment);
+      }
+      .block-body {
+        font-size: 14px;
+        line-height: 1.85;
+      }
+      .block-body p {
+        margin: 0 0 16px 0;
+        max-width: 60ch;
+      }
+      .two-col {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+      }
+      .dim {
+        color: var(--comment);
+      }
+
+      /* projects */
+      .proj {
+        cursor: pointer;
+        transition: background 240ms;
+        border-top: 1px solid var(--line);
+      }
+      .projects > :last-child {
+        border-bottom: 1px solid var(--line);
+      }
+      .proj:hover {
+        background: rgba(255, 255, 255, 0.012);
+      }
+      .proj-row {
+        display: grid;
+        grid-template-columns: 56px 1.8fr 1.2fr 80px 24px;
+        align-items: center;
+        gap: 18px;
+        padding: 22px 4px;
+        font-size: 13px;
+      }
+      .proj-n {
+        font-size: 11px;
+        letter-spacing: 0.1em;
+        color: var(--comment);
+      }
+      .proj-name {
+        font-size: 15px;
+        color: var(--fg);
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .proj-dot {
+        display: inline-block;
+        width: 6px;
+        height: 6px;
+        border-radius: 999px;
+      }
+      .proj-kind {
+        font-size: 11px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--comment);
+      }
+      .proj-year {
+        font-size: 11px;
+        letter-spacing: 0.1em;
+        color: var(--comment);
+      }
+      .proj-tog {
+        font-size: 16px;
+        text-align: right;
+        color: var(--comment);
+        transition:
+          color 240ms,
+          transform 240ms;
+      }
+      .proj.expanded .proj-tog {
+        color: var(--accent);
+        transform: rotate(45deg);
+      }
+      .proj-detail {
+        overflow: hidden;
+        max-height: 0;
+        transition: max-height 360ms cubic-bezier(0.2, 0.7, 0.2, 1);
+      }
+      .proj.expanded .proj-detail {
+        max-height: 280px;
+      }
+      .proj-detail-inner {
+        padding: 4px 0 28px 74px;
+        max-width: 64ch;
+      }
+      .proj-detail-inner p {
+        margin: 0 0 12px 0;
+        font-size: 13.5px;
+      }
+      .proj-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 26px;
+        margin-top: 14px;
+        font-size: 12px;
+        letter-spacing: 0.04em;
+      }
+      .proj-meta .k {
+        color: var(--comment);
+      }
+      .proj-meta .stack {
+        color: var(--type);
+      }
+      .proj-meta .link {
+        color: var(--accent);
+      }
+
+      /* experience */
+      .xp {
+        margin-bottom: 44px;
+        max-width: 64ch;
+      }
+      .xp-head {
+        display: flex;
+        align-items: baseline;
+        flex-wrap: wrap;
+        gap: 10px;
+        font-size: 14px;
+      }
+      .xp-co {
+        color: var(--fg);
+      }
+      .xp-where {
+        font-size: 12px;
+        color: var(--comment);
+      }
+      .xp-span {
+        margin-left: auto;
+        font-size: 11px;
+        letter-spacing: 0.08em;
+        color: var(--comment);
+      }
+      .xp-role {
+        font-size: 12px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        margin: 8px 0 14px;
+        color: var(--accent);
+      }
+      .xp-notes li {
+        font-size: 13.5px;
+        line-height: 1.85;
+      }
+      .xp-notes li::before {
+        content: "—";
+        color: var(--comment);
+        margin-right: 10px;
+      }
+
+      /* stack */
+      .stack-list {
+        display: flex;
+        flex-direction: column;
+        gap: 22px;
+      }
+      .stack-row {
+        display: grid;
+        grid-template-columns: 90px 1fr;
+        gap: 24px;
+        padding: 4px 0;
+        align-items: baseline;
+      }
+      .stack-label {
+        font-size: 11px;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--comment);
+      }
+      .stack-items {
+        font-size: 14px;
+        line-height: 1.7;
+      }
+      .stack-items .sep {
+        color: var(--comment);
+      }
+      .stack-core {
+        color: var(--keyword);
+      }
+      .stack-styling {
+        color: var(--string);
+      }
+      .stack-data {
+        color: var(--type);
+      }
+      .stack-ops {
+        color: var(--parameter);
+      }
+
+      /* contact */
+      .contact-block {
+        padding-bottom: 18vh;
+      }
+      .contact-lead {
+        font-size: 18px;
+        line-height: 1.6;
+        max-width: 48ch;
+        margin-bottom: 40px !important;
+      }
+      .contact-grid {
+        display: flex;
+        flex-direction: column;
+      }
+      .c-line {
+        display: grid;
+        grid-template-columns: 90px 1fr 20px;
+        gap: 18px;
+        align-items: baseline;
+        padding: 16px 4px;
+        border-top: 1px solid var(--line);
+        transition: padding-left 240ms;
+      }
+      .c-line:last-child {
+        border-bottom: 1px solid var(--line);
+      }
+      .c-line:hover {
+        padding-left: 14px;
+      }
+      .c-key {
+        font-size: 11px;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--comment);
+      }
+      .c-val {
+        font-size: 15px;
+      }
+      .c-val.email {
+        color: var(--string);
+      }
+      .c-val.github {
+        color: var(--builtin);
+      }
+      .c-val.linkedin {
+        color: var(--parameter);
+      }
+      .c-arrow {
+        text-align: right;
+        opacity: 0.6;
+        color: var(--comment);
+        transition:
+          opacity 240ms,
+          transform 240ms;
+      }
+      .c-line:hover .c-arrow {
+        opacity: 1;
+        transform: translate(2px, -2px);
+      }
+      .signoff {
+        margin-top: 56px;
+        font-size: 11px;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--comment);
+      }
+
+      .bg-func {
+        background: var(--func);
+      }
+      .bg-string {
+        background: var(--string);
+      }
+      .bg-hint {
+        background: var(--hint);
+      }
+      .bg-plus {
+        background: var(--plus);
+      }
+      .bg-parameter {
+        background: var(--parameter);
+      }
+      .txt-keyword {
+        color: var(--keyword);
+      }
+      .txt-builtin {
+        color: var(--builtin);
+      }
+      .spacer-bottom {
+        height: 30vh;
+      }
+
+      /* tablet */
+      @media (max-width: 1080px) {
+        .page {
+          grid-template-columns: 200px 1fr;
+        }
+        .rail {
+          width: 200px;
+          padding: 56px 22px 22px 22px;
+        }
+        .col {
+          padding: 40px 40px 0 40px;
+          max-width: 100%;
+        }
+      }
+
+      /* mobile */
+      @media (max-width: 900px) {
+        html,
+        body {
+          overflow-y: auto;
+          overflow-x: hidden;
+          height: auto;
+          scroll-behavior: smooth;
+          max-width: 100vw;
+        }
+        .page {
+          grid-template-columns: 1fr;
+          height: auto;
+        }
+        .rail {
+          position: static;
+          width: 100%;
+          height: auto;
+          border-right: 0;
+          border-bottom: 1px solid var(--line);
+          padding: 50px 20px 16px 20px;
+        }
+        .rail nav ul {
+          flex-direction: row;
+          flex-wrap: wrap;
+          gap: 12px 18px;
+          flex: none;
+        }
+        .rail-head {
+          margin-bottom: 12px;
+        }
+        .rail-foot {
+          display: none;
+        }
+        .scroll {
+          grid-column: 1;
+          height: auto;
+          min-height: 0;
+          overflow: visible;
+          padding-top: 0;
+        }
+        .col {
+          padding: 16px 20px 0 20px;
+          max-width: 100%;
+        }
+
+        .statusbar {
+          height: 30px;
+          padding: 0 16px;
+        }
+        .statusbar .sb-mid {
+          display: none;
+        }
+
+        .hero-section {
+          padding-top: 8vh;
+          padding-bottom: 6vh;
+        }
+        .meta-line {
+          margin-bottom: 36px;
+        }
+        .hero {
+          font-size: 36px;
+        }
+        .hero-sub {
+          margin-top: 18px;
+        }
+        .ambient-marks {
+          margin-top: 40px;
+          gap: 18px;
+        }
+
+        .block {
+          padding-top: 9vh;
+        }
+        .block-head {
+          gap: 12px;
+          margin-bottom: 24px;
+        }
+        .two-col {
+          grid-template-columns: 1fr;
+          gap: 12px;
+        }
+
+        .proj-row {
+          grid-template-columns: 36px 1fr 24px;
+          gap: 12px;
+          padding: 18px 0;
+        }
+        .proj-kind,
+        .proj-year {
+          display: none;
+        }
+        .proj-name {
+          font-size: 14px;
+        }
+        .proj-detail-inner {
+          padding: 0 0 24px 48px;
+        }
+        .proj-meta {
+          gap: 14px;
+          flex-direction: column;
+        }
+
+        .xp-head {
+          gap: 6px 10px;
+        }
+        .xp-span {
+          margin-left: 0;
+          width: 100%;
+          font-size: 10.5px;
+          letter-spacing: 0.1em;
+          order: 3;
+        }
+
+        .stack-row {
+          grid-template-columns: 70px 1fr;
+          gap: 14px;
+        }
+        .stack-items {
+          font-size: 13px;
+        }
+
+        .contact-lead {
+          font-size: 16px;
+        }
+        .c-line {
+          grid-template-columns: 70px 1fr 16px;
+          gap: 12px;
+          padding: 14px 0;
+        }
+        .c-line:hover {
+          padding-left: 0;
+        }
+        .c-val {
+          font-size: 13.5px;
+          word-break: break-all;
+        }
+      }
+
+      /* small mobile */
+      @media (max-width: 420px) {
+        .hero {
+          font-size: 28px;
+        }
+        .meta-line {
+          font-size: 10px;
+          gap: 8px;
+        }
+        .c-key,
+        .stack-label {
+          font-size: 10px;
+          letter-spacing: 0.12em;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <!-- status bar -->
+      <div class="statusbar">
+        <span class="sb-left">
+          <span class="dot"></span><span>nb</span
+          ><span class="sub"> · portfolio</span>
+        </span>
+        <span class="sb-mid" id="sb-section">01 about</span>
+        <span class="sb-right dim"><span id="sb-pct">0%</span></span>
+      </div>
+
+      <!-- side rail -->
+      <aside class="rail">
+        <div class="rail-head">index</div>
+        <nav aria-label="Site navigation">
+          <ul>
+            <li>
+              <a href="#about" data-id="about" class="active">01 about</a>
+            </li>
+            <li><a href="#work" data-id="work">02 selected work</a></li>
+            <li>
+              <a href="#experience" data-id="experience">03 experience</a>
+            </li>
+            <li><a href="#stack" data-id="stack">04 tools</a></li>
+            <li><a href="#contact" data-id="contact">05 contact</a></li>
+          </ul>
+        </nav>
+        <div class="rail-foot">v.2026.05</div>
+      </aside>
+
+      <!-- scroll column -->
+      <main class="scroll" id="scroll">
+        <div class="col">
+          <!-- hero -->
+          <section class="hero-section">
+            <div class="meta-line">
+              <span>portfolio</span>
+              <span class="spread">2026 · opole</span>
+            </div>
+            <h1 class="hero">norbert błaszczyk</h1>
+            <p class="hero-sub">frontend developer · pl</p>
+            <div class="ambient-marks" aria-hidden="true">
+              <span class="bg-func"></span>
+              <span class="bg-string"></span>
+              <span class="bg-hint"></span>
+              <span class="bg-plus"></span>
+              <span class="bg-parameter"></span>
+            </div>
+          </section>
+
+          <!-- about -->
+          <section id="about" class="block">
+            <div class="block-head">
+              <span class="num">01</span>
+              <h2 class="label">about</h2>
+            </div>
+            <div class="block-body two-col">
+              <p>
+                Frontend developer with three years of professional experience
+                and over a decade of writing software. Primarily
+                <span class="txt-keyword">typescript</span>,
+                <span class="txt-builtin">vue</span>, and
+                <span class="txt-builtin">react</span>. Frontend-focused,
+                comfortable across the stack.
+              </p>
+              <p class="dim">
+                Recent projects span tax software, CRM systems, booking widgets,
+                and point-of-sale platforms. Currently open to new
+                opportunities.
+              </p>
+            </div>
+          </section>
+
+          <!-- work -->
+          <section id="work" class="block">
+            <div class="block-head">
+              <span class="num">02</span>
+              <h2 class="label">selected work</h2>
+              <span class="count">5</span>
+            </div>
+            <div class="block-body">
+              <div class="projects">
+                <article class="proj expanded" data-proj>
+                  <div class="proj-row">
+                    <span class="proj-n">001</span>
+                    <span class="proj-name">
+                      <span class="proj-dot bg-func"></span>
+                      speedtax
+                    </span>
+                    <span class="proj-kind">commercial · team · itdesk</span>
+                    <span class="proj-year">2024</span>
+                    <span class="proj-tog">+</span>
+                  </div>
+                  <div class="proj-detail">
+                    <div class="proj-detail-inner">
+                      <p>Platform for managing German tax refunds.</p>
+                      <p class="dim">
+                        Built filterable data tables for large datasets.
+                      </p>
+                      <div class="proj-meta">
+                        <span><span class="k">role </span>frontend</span>
+                        <span
+                          ><span class="k">stack </span
+                          ><span class="stack"
+                            >vue, typescript, tailwind</span
+                          ></span
+                        >
+                        <span
+                          ><span class="k">↗ </span
+                          ><a
+                            class="link"
+                            href="https://speedtax.eu"
+                            target="_blank"
+                            rel="noreferrer"
+                            >speedtax.eu</a
+                          ></span
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </article>
+
+                <article class="proj" data-proj>
+                  <div class="proj-row">
+                    <span class="proj-n">002</span>
+                    <span class="proj-name">
+                      <span class="proj-dot bg-string"></span>
+                      callback24
+                    </span>
+                    <span class="proj-kind">commercial · team · itdesk</span>
+                    <span class="proj-year">2024</span>
+                    <span class="proj-tog">+</span>
+                  </div>
+                  <div class="proj-detail">
+                    <div class="proj-detail-inner">
+                      <p>
+                        Browser-based call-center CRM. Call tracking,
+                        auto-dialer, queue system.
+                      </p>
+                      <p class="dim">
+                        Integrated AI voicebots for first-touch interactions.
+                      </p>
+                      <div class="proj-meta">
+                        <span><span class="k">role </span>frontend</span>
+                        <span
+                          ><span class="k">stack </span
+                          ><span class="stack">vue, php, cakephp</span></span
+                        >
+                        <span
+                          ><span class="k">↗ </span
+                          ><a
+                            class="link"
+                            href="https://callback24.io"
+                            target="_blank"
+                            rel="noreferrer"
+                            >callback24.io</a
+                          ></span
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </article>
+
+                <article class="proj" data-proj>
+                  <div class="proj-row">
+                    <span class="proj-n">003</span>
+                    <span class="proj-name">
+                      <span class="proj-dot bg-hint"></span>
+                      todo.travel
+                    </span>
+                    <span class="proj-kind"
+                      >commercial · frontend · itdesk</span
+                    >
+                    <span class="proj-year">2023</span>
+                    <span class="proj-tog">+</span>
+                  </div>
+                  <div class="proj-detail">
+                    <div class="proj-detail-inner">
+                      <p>
+                        Mobile-first multi-step booking widget. Tpay payments,
+                        GTM tracking.
+                      </p>
+                      <p class="dim">
+                        Event tracking across the booking funnel.
+                      </p>
+                      <div class="proj-meta">
+                        <span><span class="k">role </span>frontend</span>
+                        <span
+                          ><span class="k">stack </span
+                          ><span class="stack">vue, tpay, gtm</span></span
+                        >
+                        <span
+                          ><span class="k">↗ </span
+                          ><a
+                            class="link"
+                            href="https://todo.travel"
+                            target="_blank"
+                            rel="noreferrer"
+                            >todo.travel</a
+                          ></span
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </article>
+              </div>
+            </div>
+          </section>
+
+          <!-- experience -->
+          <section id="experience" class="block">
+            <div class="block-head">
+              <span class="num">03</span>
+              <h2 class="label">experience</h2>
+            </div>
+            <div class="block-body">
+              <div class="xp">
+                <div class="xp-head">
+                  <span class="xp-co">ItDesk Ltd.</span>
+                  <span class="xp-where">· Opole, PL</span>
+                  <span class="xp-span">aug 2023 — now</span>
+                </div>
+                <div class="xp-role">frontend developer</div>
+                <ul class="xp-notes">
+                  <li>frontend across multiple commercial projects</li>
+                  <li>api integration with backend</li>
+                  <li>responsive implementations</li>
+                </ul>
+              </div>
+
+              <div class="xp">
+                <div class="xp-head">
+                  <span class="xp-co">Focus Games Ltd.</span>
+                  <span class="xp-where">· Glasgow, UK</span>
+                  <span class="xp-span">mar 2019 — apr 2019</span>
+                </div>
+                <div class="xp-role">intern</div>
+                <ul class="xp-notes">
+                  <li>built a warehouse management app</li>
+                  <li>database maintenance</li>
+                </ul>
+              </div>
+
+              <div class="xp">
+                <div class="xp-head">
+                  <span class="xp-co">Opole University of Technology</span>
+                  <span class="xp-where">· Opole, PL</span>
+                  <span class="xp-span">oct 2020 — jul 2025</span>
+                </div>
+                <div class="xp-role">m.sc. computer science</div>
+                <ul class="xp-notes">
+                  <li>algorithms &amp; data structures</li>
+                  <li>database systems</li>
+                  <li>web development</li>
+                  <li>software engineering</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          <!-- stack -->
+          <section id="stack" class="block">
+            <div class="block-head">
+              <span class="num">04</span>
+              <h2 class="label">tools</h2>
+            </div>
+            <div class="block-body">
+              <div class="stack-list">
+                <div class="stack-row">
+                  <span class="stack-label">core</span>
+                  <span class="stack-items stack-core">
+                    typescript<span class="sep"> · </span>javascript<span
+                      class="sep"
+                    >
+                      · </span
+                    >react<span class="sep"> · </span>vue<span class="sep">
+                      · </span
+                    >node<span class="sep"> · </span>express<span class="sep">
+                      · </span
+                    >python
+                  </span>
+                </div>
+                <div class="stack-row">
+                  <span class="stack-label">styling</span>
+                  <span class="stack-items stack-styling">
+                    tailwind<span class="sep"> · </span>css
+                  </span>
+                </div>
+                <div class="stack-row">
+                  <span class="stack-label">data</span>
+                  <span class="stack-items stack-data">
+                    mysql<span class="sep"> · </span>rest
+                  </span>
+                </div>
+                <div class="stack-row">
+                  <span class="stack-label">ops</span>
+                  <span class="stack-items stack-ops">
+                    docker<span class="sep"> · </span>git<span class="sep">
+                      · </span
+                    >ci/cd
+                  </span>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- contact -->
+          <section id="contact" class="block contact-block">
+            <div class="block-head">
+              <span class="num">05</span>
+              <h2 class="label">contact</h2>
+            </div>
+            <div class="block-body">
+              <p class="contact-lead">Available by email.</p>
+              <div class="contact-grid">
+                <a
+                  class="c-line"
+                  href="#"
+                  id="secure-mail"
+                  data-em="Ymxhc3pjenlrbm9yYmVydEBvdXRsb29rLmNvbQ=="
+                >
+                  <span class="c-key">email</span>
+                  <span class="c-val email" id="secure-mail-val"
+                    >click to reveal</span
+                  >
+                  <span class="c-arrow">↗</span>
+                </a>
+                <a
+                  class="c-line"
+                  href="https://github.com/blaszczyknorbert"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <span class="c-key">github</span>
+                  <span class="c-val github">blaszczyknorbert</span>
+                  <span class="c-arrow">↗</span>
+                </a>
+                <a
+                  class="c-line"
+                  href="https://linkedin.com/in/blaszczyknorbert"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <span class="c-key">linkedin</span>
+                  <span class="c-val linkedin">blaszczyknorbert</span>
+                  <span class="c-arrow">↗</span>
+                </a>
+              </div>
+              <div class="signoff">EOF</div>
+            </div>
+          </section>
+
+          <div class="spacer-bottom"></div>
+        </div>
+      </main>
+    </div>
+
+    <script>
+      const sm = document.getElementById("secure-mail");
+      const smVal = document.getElementById("secure-mail-val");
+      if (sm && smVal) {
+        const reveal = () => {
+          const decoded = atob(sm.getAttribute("data-em"));
+          sm.href = "mailto:" + decoded;
+          smVal.textContent = decoded;
+        };
+        sm.addEventListener("mouseover", reveal, { once: true });
+        sm.addEventListener("touchstart", reveal, { once: true });
+        sm.addEventListener("click", reveal);
+      }
+
+      document.querySelectorAll("[data-proj]").forEach((el) => {
+        el.addEventListener("click", (e) => {
+          if (e.target.closest("a")) return;
+          el.classList.toggle("expanded");
+        });
+      });
+
+      const sbPct = document.getElementById("sb-pct");
+      const sbSection = document.getElementById("sb-section");
+      const navLinks = document.querySelectorAll(".rail nav a");
+      const scroller = document.getElementById("scroll");
+      const sectionMap = {
+        about: "01 about",
+        work: "02 selected work",
+        experience: "03 experience",
+        stack: "04 tools",
+        contact: "05 contact",
+      };
+      const sectionIds = Object.keys(sectionMap);
+      const sections = sectionIds.map((id) => document.getElementById(id));
+
+      let scrollSrc = null;
+      let rafPending = false;
+      let resizeTimer;
+
+      function buildScrollSrc() {
+        const mobile = getComputedStyle(scroller).overflowY === "visible";
+        return mobile
+          ? {
+              top: () => window.scrollY,
+              max: () =>
+                document.documentElement.scrollHeight - window.innerHeight,
+              scrollTo: (opts) => window.scrollTo(opts),
+              listenOn: window,
+            }
+          : {
+              top: () => scroller.scrollTop,
+              max: () => scroller.scrollHeight - scroller.clientHeight,
+              scrollTo: (opts) => scroller.scrollTo(opts),
+              listenOn: scroller,
+            };
+      }
+
+      function update() {
+        const max = scrollSrc.max();
+        const pct = max > 0 ? scrollSrc.top() / max : 0;
+        sbPct.textContent = Math.round(pct * 100) + "%";
+
+        let cur = "about";
+        const threshold = window.innerHeight * 0.2;
+        for (let i = 0; i < sections.length; i++) {
+          if (
+            sections[i] &&
+            sections[i].getBoundingClientRect().top < threshold
+          )
+            cur = sectionIds[i];
+        }
+        sbSection.textContent = sectionMap[cur];
+        navLinks.forEach((a) =>
+          a.classList.toggle("active", a.dataset.id === cur),
+        );
+      }
+
+      function scheduleUpdate() {
+        if (rafPending) return;
+        rafPending = true;
+        requestAnimationFrame(() => {
+          rafPending = false;
+          update();
+        });
+      }
+
+      function bindScroll() {
+        if (scrollSrc)
+          scrollSrc.listenOn.removeEventListener("scroll", scheduleUpdate);
+        scrollSrc = buildScrollSrc();
+        scrollSrc.listenOn.addEventListener("scroll", scheduleUpdate, {
+          passive: true,
+        });
+      }
+
+      bindScroll();
+
+      window.addEventListener("resize", () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => {
+          bindScroll();
+          update();
+        }, 150);
+      });
+
+      update();
+
+      navLinks.forEach((a) => {
+        a.addEventListener("click", (e) => {
+          const id = a.dataset.id;
+          const sect = document.getElementById(id);
+          if (!sect) return;
+          e.preventDefault();
+          const offset =
+            sect.getBoundingClientRect().top + scrollSrc.top() - 40;
+          scrollSrc.scrollTo({ top: offset, behavior: "smooth" });
+          let settled = false;
+          const onEnd = () => {
+            if (settled) return;
+            settled = true;
+            update();
+          };
+          scrollSrc.listenOn.addEventListener("scrollend", onEnd, {
+            once: true,
+          });
+          setTimeout(onEnd, 600);
+        });
+      });
+    </script>
+  </body>
+</html>
